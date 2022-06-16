@@ -22,10 +22,6 @@ export default defineComponent({
     person: {
       required: true,
       type: Object as PropType<IPerson>
-    },
-    index: {
-      required: true,
-      type: Number as PropType<number>
     }
   },
   setup() {

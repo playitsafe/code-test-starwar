@@ -1,7 +1,11 @@
 <template>
   <div class="people">
-    <ResultCount :count="22" />
-    <MoviePerson v-for="(person, i) in response.results" :key="i" :person="person" :index="i" />
+    <ResultCount :count="response.count" />
+    <MoviePerson v-for="(person, i) in response.results" :key="i" :person="person" />
+    <div class="people__btns">
+      <button @click="onPrevPage" class="btn prev" :disabled="!response.previous" :class="{disabled: !response.previous}">Previous</button>
+      <button @click="onNextPage" class="btn next" :disabled="!response.next" :class="{disabled: !response.next}">Next</button>
+    </div>
   </div>
 </template>
 
@@ -15,40 +19,103 @@ export default defineComponent({
   name: 'MoviePeople',
   components: {
     ResultCount,
-    MoviePerson
+    MoviePerson,
   },
   setup() {
     const currentPage = ref<number>(0);
     const response = ref<IResponse>({
-      count: 82,
-      next: "https://swapi.dev/api/people/?page=2",
+      count: 0,
+      next: null,
       previous: null,
-      results: [{
-        mass: "77",
-        name: "Luke Skywalker",
-        gender: "male",
-        height: "172"
-      }]
+      results: []
     });
 
-    onMounted(() => { fetchPeople() })
+    onMounted(() => {
+      fetchPeople(currentPage.value + 1);
+      currentPage.value++;
+    })
 
-    const fetchPeople = () => {
-      // fetch('https://swapi.dev/api/people/?page=' + currentPage.value + 1)
-      //   .then((res) => res.json())
-      //   .then(data => {
-      //     response.value = data;
-      //     currentPage.value++;
-      //     console.log(data);
-      //   })
+    const fetchPeople = (pageNum: number) => {
+      fetch('https://swapi.dev/api/people/?page=' + pageNum)
+        .then((res) => res.json())
+        .then(data => {
+          response.value = data;
+        })
     }
 
-    return { currentPage, response }
+    const onPrevPage = () => {
+      if (response.value.previous && currentPage.value > 1) {
+        fetchPeople(currentPage.value - 1);
+        currentPage.value--;
+      }
+    }
+
+    const onNextPage = () => {
+      if (response.value.next) {
+        fetchPeople(currentPage.value + 1);
+        currentPage.value++;
+      }
+    }
+
+    return { currentPage, response, onPrevPage, onNextPage }
   }
 })
 </script>
 
 <style lang="scss">
 @import '../styles/variables.scss';
+@import '../styles/mixins.scss';
 
+.people {
+  &__btns {
+    padding: 10px 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    .btn {
+      font-size: 18px;
+      color: $white;
+      min-height: 40px;
+      min-width: 120px;
+      border: none;
+      background: $bg-blue;
+      border-radius: 5px;
+      margin-left: 15px;
+      padding: 15px 25px;
+      cursor: pointer;
+
+      &.disabled {
+        background: $bg-blue-disabled;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include devices(tab-size) {
+    &__btns {
+      display: flex;
+      flex-direction: row;
+
+      .btn {
+        width: 50%;
+        margin: 10px auto;
+        font-size: 16px;
+        padding: 12px 22px;
+      }
+    }
+  }
+
+  @include devices(tab-size) {
+    &__btns {
+      flex-direction: column;
+      .btn {
+        font-size: 14px;
+        min-height: 30px;
+        min-width: 100px;
+        padding: 12px 22px;
+      }
+    }
+  }
+}
 </style>
