@@ -1,11 +1,12 @@
 # star-wars
 
 ## Project setup
+To install all dependencies, run
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### To start up the project on local server, run
 ```
 npm run serve
 ```

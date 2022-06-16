@@ -25,6 +25,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const avatarText = ref<string>('');
     const bgColor = ref<string>('');
     const bgColors = ['blue', 'red', 'purple'];
     const randomIndex = Math.floor(Math.random() * bgColors.length)
@@ -42,9 +43,9 @@ export default defineComponent({
       } else {
         initial = name;
       }
-      return initial;
+      return initial.toUpperCase();
     }
-    const avatarText = getAvatarText(props.person.name);
+    avatarText.value = getAvatarText(props.person.name);
     return { bgColor, avatarText };
   }
 })
