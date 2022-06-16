@@ -18,7 +18,8 @@ export default defineComponent({
 
 .count {
   font-size: 20px;
-  padding: 10px 0;
+  padding: 10px 30px;
+  background-color: $bg-light-grey;
 
   @include devices(tab-size) {
     font-size: 16px;
