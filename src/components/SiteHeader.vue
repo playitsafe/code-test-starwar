@@ -9,10 +9,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'SiteHeader',
-  props: {
-    msg: String,
-  },
+  name: 'SiteHeader'
 });
 </script>
 
@@ -24,6 +21,7 @@ export default defineComponent({
 .header {
   background: $bg-grey;
   padding: 20px 30px;
+
   h1, h2 {
     color: $text-white;
   }

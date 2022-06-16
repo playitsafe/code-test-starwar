@@ -1,15 +1,18 @@
 <template>
-  <SiteHeader msg="Welcome to Your Vue.js + TypeScript App"/>
+  <SiteHeader/>
+  <MoviePeople />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import SiteHeader from './components/SiteHeader.vue';
+import MoviePeople from './containers/MoviePeople.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    SiteHeader
+    SiteHeader,
+    MoviePeople
   }
 });
 </script>
