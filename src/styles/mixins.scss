@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+@mixin devices($breakpoint) {
+  @if ($breakpoint == tab-size) {
+    @media (max-width: $tab-size) {
+      @content;
+    }
+  }
+
+  @if ($breakpoint == mobile-size) {
+    @media (max-width: $mobile-size) {
+      @content;
+    }
+  }
+}
