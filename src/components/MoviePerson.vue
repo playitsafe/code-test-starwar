@@ -1,7 +1,7 @@
 <template>
   <div class="person">
     <div :class="'person__avatar ' + bgColor">
-      {{ 'AB' }}
+      {{ avatarText }}
     </div>
     <div class="person__desc">
       <p class="person__desc__name">{{ person.name }}</p>
@@ -24,12 +24,28 @@ export default defineComponent({
       type: Object as PropType<IPerson>
     }
   },
-  setup() {
+  setup(props) {
     const bgColor = ref<string>('');
     const bgColors = ['blue', 'red', 'purple'];
     const randomIndex = Math.floor(Math.random() * bgColors.length)
     bgColor.value = bgColors[randomIndex];
-    return { bgColor };
+
+    const getAvatarText = (name: string): string => {
+      let separator = '';
+      let initial;
+      name.includes(' ') && (separator = ' ');
+      name.includes('-') && (separator = '-');
+
+      const splittedName = name.split(separator);
+      if (splittedName.length >= 2) {
+        initial = splittedName[0][0] + splittedName[1][0]
+      } else {
+        initial = name;
+      }
+      return initial;
+    }
+    const avatarText = getAvatarText(props.person.name);
+    return { bgColor, avatarText };
   }
 })
 </script>
@@ -125,7 +141,4 @@ export default defineComponent({
     }
   }
 }
-
-
-
 </style>

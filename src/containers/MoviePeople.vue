@@ -109,10 +109,11 @@ export default defineComponent({
   @include devices(tab-size) {
     &__btns {
       flex-direction: column;
+      padding: 0 10px;
       .btn {
         font-size: 14px;
         min-height: 30px;
-        min-width: 100px;
+        min-width: 100%;
         padding: 12px 22px;
       }
     }
