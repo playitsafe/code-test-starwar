@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, computed } from "vue";
 import { IPerson } from '../interfaces/star-war';
 
 export default defineComponent({
@@ -25,7 +25,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const avatarText = ref<string>('');
+    // const avatarText = ref<string>('');
     const bgColor = ref<string>('');
     const bgColors = ['blue', 'red', 'purple'];
     const randomIndex = Math.floor(Math.random() * bgColors.length)
@@ -45,7 +45,8 @@ export default defineComponent({
       }
       return initial.toUpperCase();
     }
-    avatarText.value = getAvatarText(props.person.name);
+
+    const avatarText = computed(() => getAvatarText(props.person.name));
     return { bgColor, avatarText };
   }
 })
